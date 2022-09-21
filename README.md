@@ -1,0 +1,1 @@
+# VIAUMA06-Szoftverarchitekturak
