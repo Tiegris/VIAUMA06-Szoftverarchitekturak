@@ -1,0 +1,7 @@
+\begin{tabular}{ {{ args['tabular']|default("| m{5em} | m{1cm}| m{1cm} |", true) }} } 
+  \hline
+  {% for row in tdata %}
+  {{ row | join(' & ') }} \\
+  \hline
+  {% endfor %}
+\end{tabular}
