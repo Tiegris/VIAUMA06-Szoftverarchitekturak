@@ -1,5 +1,3 @@
-from distutils import extension
-from email.policy import default
 import click
 import csv as _csv
 from jinja2 import Environment, FileSystemLoader
@@ -30,6 +28,7 @@ def csv_command(ctx, input_file):
         list = [row for row in reader]
     ctx.obj['tdata'] = list
     export(ctx.obj)
+
 
 def export(context):
     template_path = os.path.dirname(os.path.realpath(__file__))
