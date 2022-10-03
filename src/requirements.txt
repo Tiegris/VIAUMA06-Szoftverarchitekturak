@@ -1,2 +1,4 @@
 click
 Jinja2
+pandas
+streamlit

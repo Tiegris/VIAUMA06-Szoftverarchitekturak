@@ -1,0 +1,5 @@
+| Typ | Color | Name |
+| - | - | - |
+| apple | red | jonatan |
+| pear | yellow | golden |
+| grape | green | nova |
