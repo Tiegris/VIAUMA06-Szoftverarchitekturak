@@ -8,9 +8,15 @@ def render(context: TemplateContext):
     # TODO: template dir from env var
     template_file_name = context.template_name
     
-    template_path = os.path.dirname(os.path.realpath(__file__))
-    env = Environment(loader=FileSystemLoader('src/templates'))
+    template_folder = 'src/templates'
+    env = Environment(loader=FileSystemLoader(template_folder))
+    env.trim_blocks = True
+    env.lstrip_blocks = True
     template = env.get_template(template_file_name)
-    rendered = template.render(tdata=context.tdata, args=context.args)
-    return rendered
+    rendered = template.render(
+        thead=context.thead,
+        tdata=context.tdata,
+        args=context.template_params,
+    )
+    return rendered.strip()
 

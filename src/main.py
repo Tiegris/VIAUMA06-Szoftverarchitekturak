@@ -18,8 +18,9 @@ def main():
     st.button('Render', on_click=click_handler, disabled=(file is None), kwargs={'context':context})
 
 def click_handler(context):
-    render(context)
-    st.text_area('Rendered')
+    rendered = render(context)
+    height = 24 * (1 + len(rendered.split('\n')))
+    st.text_area('Rendered', value=rendered, height=height)
 
 
 if __name__ == "__main__":

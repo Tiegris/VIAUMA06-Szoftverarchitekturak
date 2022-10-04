@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 from streamlit.runtime.uploaded_file_manager import UploadedFile
 from parsers import get_parser
+import streamlit as st
 
 @dataclass
 class TemplateContext:
@@ -9,7 +10,7 @@ class TemplateContext:
     template_params: dict[str, str]
     template_name: str
     
-    def __init__(self, file: UploadedFile, parser_args: list[str], template_params: list[str], template_name: str):
+    def __init__(self, file: UploadedFile, parser_args: str, template_params: str, template_name: str):
         self.file = file
         self.parser_args = parse_kvs(parser_args)
         self.template_params = parse_kvs(template_params)
@@ -17,10 +18,29 @@ class TemplateContext:
         
     @property
     def tdata(self):
-        if self._tdata is None:
-            self._tdata = get_parser(self.file)(self.file)
-        return self.__tdata
+        if not hasattr(self, '_tdata'):
+            self._thead, self._tdata = get_parser(self.file)(self.file, self.parser_args)
+        return self._tdata
+    
+    @property
+    def thead(self):
+        if not hasattr(self, '_thead'):
+            self._thead, self._tdata = get_parser(self.file)(self.file, self.parser_args)
+        return self._thead
 
 
-def parse_kvs(kvs: list[str]) -> dict[str, str]:
-    return { '='.split(kv)[0]:'='.split(kv)[1] for kv in kvs}
+def parse_kvs(kvs: str) -> dict[str, str]:
+    if kvs is None or kvs.strip() == '':
+        return {}
+    
+    kvs = kvs.strip().split('\n')
+    dict = {}
+    for kv in kvs:
+        splitted = kv.strip().split('=', 1)
+        if len(splitted) != 2:
+            st.error('Error in kv paris.')
+            return {}
+        dict[splitted[0].strip()] = splitted[1].strip()
+    return dict
+    
+   
