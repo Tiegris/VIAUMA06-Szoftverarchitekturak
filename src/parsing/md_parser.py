@@ -68,6 +68,8 @@ def _split_line(line: str) -> list[str]:
             result[i] = consumed        
             if consumed == '' or consumed[-1] != '//':
                 break
+            else:
+                result[i] = result[i][0:-1]
 
     return result
     
