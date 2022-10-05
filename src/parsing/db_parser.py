@@ -36,7 +36,7 @@ class DbParser(ParserBase):
 
             # NOTE: This is SQL injection vulnerable, however it poses no threat, since the query is executed on a temporary copy of a user-uploaded database file.
             parsed = pd.read_sql(query, conn)
-            return [i for i in parsed.columns], [[j for j in i] for i in parsed.values]
+            return [i if type(i) == str else str(i) for i in parsed.columns], [[j if type(j) == str else str(j) for j in i] for i in parsed.values]
         finally:
             try:
                 conn.close()

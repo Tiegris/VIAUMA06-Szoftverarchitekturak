@@ -11,7 +11,7 @@ class CsvParser(ParserBase):
     def parse(self, file: UploadedFile, args: dict[str, str]) -> tuple[list[str], list[list[str]]]:
         delimiter = args.get(*self._arg_delimiter)
         parsed = pd.read_csv(file, delimiter = delimiter)
-        return [i for i in parsed.columns], [[j for j in i] for i in parsed.values]
+        return [i if type(i) == str else str(i) for i in parsed.columns], [[j if type(j) == str else str(j) for j in i] for i in parsed.values]
 
 
     def help(self) -> list[Help]:

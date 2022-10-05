@@ -1,6 +1,5 @@
 from dataclasses import dataclass, field
 from streamlit.runtime.uploaded_file_manager import UploadedFile
-from parsing import get_parser
 import streamlit as st
 
 @dataclass
@@ -15,18 +14,6 @@ class TemplateContext:
         self.parser_args = parse_kvs(parser_args)
         self.template_params = parse_kvs(template_params)
         self.template_name = template_name
-        
-    @property
-    def tdata(self):
-        if not hasattr(self, '_tdata'):
-            self._thead, self._tdata = get_parser(self.file).parse(self.file, self.parser_args)
-        return self._tdata
-    
-    @property
-    def thead(self):
-        if not hasattr(self, '_thead'):
-            self._thead, self._tdata = get_parser(self.file).parse(self.file, self.parser_args)
-        return self._thead
 
 
 def parse_kvs(kvs: str) -> dict[str, str]:
