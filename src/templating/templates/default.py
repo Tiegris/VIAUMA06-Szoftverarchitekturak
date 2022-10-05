@@ -1,5 +1,3 @@
-from typing import Callable
-
 from templating.escapers.escaper import Escaper
 from .template_base import TemplateBase
 

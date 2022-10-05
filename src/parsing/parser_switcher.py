@@ -11,7 +11,7 @@ import os
 
 
 def _file_extension(file_name: str) -> str:
-    return os.path.splitext(file_name)[1]  
+    return os.path.splitext(file_name)[1]
 
 _octet_stream_switcher = {
     '.md': MdParser(),
@@ -26,7 +26,7 @@ _switcher = {
 }
 
 def get_parser(file: UploadedFile) -> ParserBase:
-    result =  _switcher.get(file.type)    
+    result =  _switcher.get(file.type)
     if type(result) == dict:
         return result.get(_file_extension(file.name))
     return result
