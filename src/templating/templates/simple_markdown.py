@@ -5,23 +5,23 @@ from .template_base import TemplateBase
 
 import templating.escapers as esc
 
-class Default(TemplateBase):
+class SimpleMarkdown(TemplateBase):
 
     @property
     def name(self) -> str:
-        return 'Default LateX'
+        return 'Simple Markdown'
 
     @property
     def template_path(self) -> str:
-        return 'default.tex.j2'
+        return 'simple_markdown.md.j2'
 
     @property
     def help(self) -> str:
         return """
-        tabular = <all centered>
+        aligner = |-|-|...|-|
         """.strip()
 
-    _escaper = Escaper(esc.latex_escape_table)
+    _escaper = Escaper(esc.md_escape_table)
     @property
     def escaper(self) -> esc.Escaper:
         return self._escaper
