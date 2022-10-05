@@ -1,4 +1,4 @@
-| Typ | Color | Name |
+| Type | Color | Name |
 | - | - | - |
 | apple | red | jonatan |
 | pear | yellow | golden |

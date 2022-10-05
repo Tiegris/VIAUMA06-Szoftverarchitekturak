@@ -1,5 +1,4 @@
 from jinja2 import Environment, FileSystemLoader
-import os
 
 from context import TemplateContext
 

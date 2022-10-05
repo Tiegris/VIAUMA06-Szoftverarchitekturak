@@ -1,7 +1,7 @@
 import streamlit as st
-from parsers import get_parser
+from parsing import get_parser
 from context import TemplateContext
-from template_renderer import render
+from templating import render
 from utils import list_templates
 
 def main():
@@ -9,9 +9,18 @@ def main():
     
     if file is None:
         st.error("No file were uploaded")
+        parser = None
+    else:
+        parser = get_parser(file)
+        
+    parser_args_help = 'Key-value pairs for the parser engine. Put every entry in a new line. Upload file to get specific help.'
+    parser_args_placeholder = '# Upload file to get specific help.\nkey_1=value_2\nkey_2=value_2' if parser is None else '\n'.join([x.serialize() for x in parser.help()])
+    
+    template_params_help = 'Key-value pairs for the template. Put every entry in a new line.'
+    template_params_placeholder = 'key_1=value_2\nkey_2=value_2'
             
-    parser_args = st.text_area('Parser arguments', help='Key-value pairs for the parser engine. Put every entry in a new line.', placeholder='key_1=value_2\nkey_2=value_2')
-    template_params = st.text_area('Template parameters', help='Key-value pairs for the template. Put every entry in a new line.', placeholder='key_1=value_2\nkey_2=value_2')
+    parser_args = st.text_area('Parser arguments', help=parser_args_help, placeholder=parser_args_placeholder)
+    template_params = st.text_area('Template parameters', help=template_params_help, placeholder=template_params_placeholder)
     selected_template = st.selectbox('Template selector', options=list_templates())
     
     context = TemplateContext(file, parser_args, template_params, selected_template)
