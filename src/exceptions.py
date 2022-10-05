@@ -1,9 +1,12 @@
-class TemplateParameterException(Exception):
+class AppException(Exception):
     pass
 
-class ParserArgumentException(Exception):
+class TemplateParameterException(AppException):
     pass
 
-class MalformedUploadedFileException(Exception):
+class ParserArgumentException(AppException):
+    pass
+
+class MalformedUploadedFileException(AppException):
     pass
 

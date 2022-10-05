@@ -1,4 +1,5 @@
 import streamlit as st
+from exceptions import AppException, MalformedUploadedFileException, ParserArgumentException, TemplateParameterException
 
 from parsing import get_parser
 from context import TemplateContext
@@ -35,4 +36,13 @@ def click_handler(context):
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except ParserArgumentException:
+        st.error('Error in parser arguments!')
+    except TemplateParameterException:
+        st.error('Error in template parameters!')
+    except MalformedUploadedFileException:
+        st.error('Malformed input file!')
+    except:
+        st.error('Unhandled exception occurred!')
