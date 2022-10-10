@@ -55,6 +55,7 @@ def _split_line(line: str) -> list[str]:
             continue
         if c == '|':
             col_count += 1
+        prev = c
     col_count -= 1
     result = ['' for i in range(col_count)]
     
