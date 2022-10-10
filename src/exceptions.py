@@ -9,4 +9,3 @@ class ParserArgumentException(AppException):
 
 class MalformedUploadedFileException(AppException):
     pass
-
