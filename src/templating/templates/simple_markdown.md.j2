@@ -1,0 +1,11 @@
+{% macro default_aligner(count) -%}
+|{% for i in range(count) %}-| {%- endfor %} 
+{%- endmacro %}
+
+{% set aligner=args['aligner'] or default_aligner(thead|length) %}
+
+| {{ thead | join(' | ') }} |
+{{ aligner }}
+{% for row in tdata %}
+| {{ row | join(' | ') }} |
+{% endfor %}

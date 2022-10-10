@@ -1,0 +1,17 @@
+[
+    {
+        "Type": "apple",
+        "Color": "red",
+        "Name": "jonatan"
+    },
+    {
+        "Type": "pear",
+        "Color": "yellow",
+        "Name": "golden"
+    },
+    {
+        "Type": "grape",
+        "Color": "green",
+        "Name": "nova"
+    }
+]

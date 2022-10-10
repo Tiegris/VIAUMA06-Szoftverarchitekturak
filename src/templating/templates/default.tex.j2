@@ -1,0 +1,14 @@
+{% macro tabular_default(count) -%}
+|{% for i in range(count) %} c | {%- endfor %} 
+{%- endmacro %}
+
+{% set tabular=args['tabular'] or tabular_default(thead|length) %}
+\begin{tabular}{ {{ tabular }} } 
+  \hline
+  {{ thead | join(' & ') }} \\
+  \hline\hline
+  {% for row in tdata %}
+  {{ row | join(' & ') }} \\
+  \hline
+  {% endfor %}
+\end{tabular}
