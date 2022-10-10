@@ -1,11 +1,11 @@
-class AppException(Exception):
+class ManagedException(Exception):
     pass
 
-class TemplateParameterException(AppException):
+class ArgumentParsingError(ManagedException):
     pass
 
-class ParserArgumentException(AppException):
+class ParserEngineError(ManagedException):
     pass
 
-class MalformedUploadedFileException(AppException):
+class MalformedUploadedFileError(ManagedException):
     pass

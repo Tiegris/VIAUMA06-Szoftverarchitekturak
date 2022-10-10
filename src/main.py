@@ -9,14 +9,14 @@ import templating.templates as templates
 def safe_call(fun, *args):
     try:
         return fun(*args)
-    except ParserArgumentException:
-        st.error('Error in parser arguments!')
-    except TemplateParameterException:
-        st.error('Error in template parameters!')
-    except MalformedUploadedFileException:
-        st.error('Malformed input file!')
+    except ParserEngineError:
+        st.error('Parser engine error: Can\' parse the uploaded file with the provided arguments.')
+    except ArgumentParsingError:
+        st.error('Error in parameter key-value pairs.')
+    except MalformedUploadedFileError:
+        st.error('Malformed input file.')
     except:
-        st.error('Unhandled exception occurred!')
+        st.error('Unhandled exception occurred.')
 
 
 def show_page():

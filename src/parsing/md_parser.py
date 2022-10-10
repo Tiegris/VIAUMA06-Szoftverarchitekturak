@@ -1,6 +1,6 @@
 from streamlit.runtime.uploaded_file_manager import UploadedFile
 
-from exceptions import MalformedUploadedFileException, TemplateParameterException
+from exceptions import MalformedUploadedFileError, ParserEngineError
 
 from .parser_base import ParserBase
 from .help import Help
@@ -15,25 +15,25 @@ class MdParser(ParserBase):
             starting_line_index = int(args.get(*self._arg_starting_line_index)) - 1
             encoding = args.get(*self._arg_encoding)
         except ValueError:
-            raise TemplateParameterException('Value of argument: "line", is not an integer.')
+            raise ParserEngineError('Value of argument: "line", is not an integer.')
 
         lines = file.readlines()
         # Length + 3, because a md table is at least 3 lines long.
         if starting_line_index > len(lines) + 3:
-            raise TemplateParameterException('File has less lines than provided starting line.')
+            raise ParserEngineError('File has less lines than provided starting line.')
     
         header = _parse_line(lines[starting_line_index], encoding)
         expected_len = len(header)
         aligners = _parse_line(lines[starting_line_index + 1], encoding)
         
         if len(aligners) != expected_len:
-            raise MalformedUploadedFileException('Malformed table.')
+            raise MalformedUploadedFileError('Malformed table.')
 
         result = []
         for i in range(starting_line_index + 2, len(lines)):
             line = _parse_line(lines[i], encoding)
             if len(line) != expected_len:
-                raise MalformedUploadedFileException('Malformed table.')
+                raise MalformedUploadedFileError('Malformed table.')
             result.append(line)
             
         return header, result
@@ -62,7 +62,7 @@ def _split_line(line: str) -> list[str]:
     for i in range(col_count):
         while True:
             if consumed_index >= len(splitted):
-                raise MalformedUploadedFileException('Malformed table.')
+                raise MalformedUploadedFileError('Malformed table.')
             consumed = splitted[consumed_index]
             consumed_index += 1
             result[i] = consumed        
@@ -77,6 +77,6 @@ def _split_line(line: str) -> list[str]:
 def _parse_line(line: bytes, encoding: str) -> list[str] :
     decoded_line = line.strip().decode(encoding)
     if len(decoded_line) == 0 or decoded_line[0] != '|' or decoded_line[-1] != '|':
-        raise MalformedUploadedFileException('Malformed table.')
+        raise MalformedUploadedFileError('Malformed table.')
     return [x.strip() for x in _split_line(decoded_line)]
 
