@@ -1,8 +1,7 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from streamlit.runtime.uploaded_file_manager import UploadedFile
-import streamlit as st
 
-from exceptions import ParserArgumentException
+from exceptions import ArgumentParsingError
 
 @dataclass
 class TemplateContext:
@@ -27,7 +26,7 @@ def parse_kvs(kvs: str) -> dict[str, str]:
     for kv in kvs:
         splitted = kv.strip().split('=', 1)
         if len(splitted) != 2:
-            raise ParserArgumentException('Error in kv paris.')
+            raise ArgumentParsingError('Error in kv paris.')
         dict[splitted[0].strip()] = splitted[1].strip()
     return dict
     
