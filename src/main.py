@@ -16,7 +16,7 @@ def safe_call(fun, *args):
     except MalformedUploadedFileError:
         st.error('Malformed input file.')
     except:
-        st.error('Unhandled exception occurred.')
+        st.error('Invalid input error.')
 
 
 def show_page():
@@ -35,9 +35,9 @@ def show_page():
     
     template_params_help = 'Key-value pairs for the template. Put every entry in a new line.'
     template_params_placeholder = 'key_1=value_2\nkey_2=value_2' if selected_template is None else templates.templates[selected_template].help
-            
-    parser_args = st.text_area('Parser arguments', help=parser_args_help, placeholder=parser_args_placeholder)
-    template_params = st.text_area('Template parameters', help=template_params_help, placeholder=template_params_placeholder)
+
+    parser_args = st.text_area('Parser arguments', help=parser_args_help, placeholder=parser_args_placeholder, disabled=(parser_args_placeholder is ""))
+    template_params = st.text_area('Template parameters', help=template_params_help, placeholder=template_params_placeholder, disabled=(template_params_placeholder is ""))
     
     context = TemplateContext(file, parser_args, template_params, selected_template)
     st.button('Render', on_click=safe_call, disabled=(file is None), args=(click_handler, context))
