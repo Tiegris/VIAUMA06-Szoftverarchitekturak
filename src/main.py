@@ -1,3 +1,4 @@
+from math import floor
 import streamlit as st
 from exceptions import *
 
@@ -44,7 +45,7 @@ def show_page():
 
 def click_handler(context):
     rendered = render(context)
-    height = 24 * (1 + len(rendered.split('\n')))
+    height = floor(22.5 * (1 + len(rendered.split('\n'))))
     st.text_area('Rendered', value=rendered, height=height)
 
 if __name__ == "__main__":
