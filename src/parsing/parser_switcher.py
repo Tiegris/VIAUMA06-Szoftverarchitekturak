@@ -22,7 +22,8 @@ _switcher = {
     'application/json': JsonParser(),
     'text/csv': CsvParser(),
     'application/octet-stream': _octet_stream_switcher,
-    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ExcelParser()
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ExcelParser(),
+    'text/markdown': MdParser(),
 }
 
 def get_parser(file: UploadedFile) -> ParserBase:
